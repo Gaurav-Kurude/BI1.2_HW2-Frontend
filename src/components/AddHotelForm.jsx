@@ -30,7 +30,7 @@ const AddHotelForm = () => {
         : name === "rating"
         ? parseFloat(value)
         : name === "amenities"
-? value.split(",").map((item) => item.trim())
+        ? value.split(",").map((item) => item.trim())
         : name === "photos"
         ? value.split(",").map((photo) => photo.trim())
         : value,
