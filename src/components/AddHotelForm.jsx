@@ -235,6 +235,8 @@ const AddHotelForm = () => {
           checked={formData.isRestaurantAvailable}
           onChange={handleChange}
         />
+        <br />
+        <br />
         <label>Photos: </label>
         <br />
         <input 
