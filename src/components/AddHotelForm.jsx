@@ -3,7 +3,7 @@ import React, {useState} from "react";
 const AddHotelForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    category: [],
+    category: "",
     location: "",
     rating: "",
     website: "",
