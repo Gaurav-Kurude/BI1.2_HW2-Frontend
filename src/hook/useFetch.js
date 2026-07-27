@@ -8,6 +8,7 @@ const useFetch = (url, initialData) => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
+        console.log("GET Response:", data);
         setData(data);
       })
       .catch((error) => setError(error.message))
