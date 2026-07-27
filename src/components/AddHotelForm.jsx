@@ -3,29 +3,37 @@ import React, {useState} from "react";
 const AddHotelForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    category: [],
+    category: "",
     location: "",
     rating: "",
     website: "",
     phoneNumber: "",
     checkInTime: "",
     checkOutTime: "",
-    amenities: "",
-    priceRange: [],
+    amenities: [],
+    priceRange: "",
     reservationsNeeded: false,
     isParkingAvailable: false,
     isWifiAvailable: false,
     isPoolAvailable: false,
     isSpaAvailable: false,
     isRestaurantAvailable: false,
-    photos: "",
+    photos: [],
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked, files } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: name === "rating" ? parseInt(value) : value,
+      [name]: type === "checkbox"
+        ? checked
+        : name === "rating"
+        ? parseFloat(value)
+        : name === "amenities"
+? value.split(",").map((item) => item.trim())
+        : name === "photos"
+        ? value.split(",").map((photo) => photo.trim())
+        : value,
     }));
   };
 
@@ -35,7 +43,7 @@ const AddHotelForm = () => {
         const response = await fetch("https://bi-1-2-hw-2-backend.vercel.app/hotels", 
             {
                 method: "POST",
-                header: {
+                headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(formData)
@@ -105,6 +113,7 @@ const AddHotelForm = () => {
           onChange={handleChange}
         />
         <br />
+        <br />
         <label>Website: </label>
         <br />
         <input
@@ -141,7 +150,7 @@ const AddHotelForm = () => {
           type="text"
           name="checkOutTime"
           value={formData.checkOutTime}
-          omChange={handleChange}
+          onChange={handleChange}
         />
         <br />
         <br />
@@ -150,7 +159,7 @@ const AddHotelForm = () => {
         <input
           type="text"
           name="amenities"
-          value={formData.amenities}
+          value={formData.amenities.join(", ")}
           onChange={handleChange}
         />
         <br />
@@ -173,7 +182,7 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="reservationsNeeded"
-          value={formData.reservationsNeeded}
+          checked={formData.reservationsNeeded}
           onChange={handleChange}
         />
         <br />
@@ -183,7 +192,7 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="isParkingAvailable"
-          value={formData.isParkingAvailable}
+          checked={formData.isParkingAvailable}
           onChange={handleChange}
         />
         <br />
@@ -193,7 +202,7 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="isWifiAvailable"
-          value={formData.isWifiAvailable}
+          checked={formData.isWifiAvailable}
           onChange={handleChange}
         />
         <br />
@@ -203,7 +212,7 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="isPoolAvailable"
-          value={formData.isPoolAvailable}
+          checked={formData.isPoolAvailable}
           onChange={handleChange}
         />
         <br />
@@ -213,7 +222,7 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="isSpaAvailable"
-          value={formData.isSpaAvailable}
+          checked={formData.isSpaAvailable}
           onChange={handleChange}
         />
         <br />
@@ -223,15 +232,15 @@ const AddHotelForm = () => {
         <input
           type="checkbox"
           name="isRestaurantAvailable"
-          value={formData.isRestaurantAvailable}
+          checked={formData.isRestaurantAvailable}
           onChange={handleChange}
         />
         <label>Photos: </label>
         <br />
         <input 
-        type="file" 
-        name="images" 
-        value={formData.images}
+        type="text" 
+        value={formData.photos.join(", ")}
+        name="photos" 
         onChange={handleChange}
         />
         <br />
