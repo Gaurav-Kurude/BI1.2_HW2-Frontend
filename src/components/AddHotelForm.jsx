@@ -1,3 +1,5 @@
+import React, {useState} from "react";
+
 const AddHotelForm = () => {
   const [formData, setFormData] = useState({
     name: "",
